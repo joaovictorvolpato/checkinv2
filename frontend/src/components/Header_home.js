@@ -9,7 +9,7 @@ const Header_home = (props) => {
         <Nav className="me-auto">
           <Nav.Link href="/">{props.names[1]}</Nav.Link>
           <Nav.Link href="/login">{props.names[2]}</Nav.Link>
-          <Nav.Link href="/signup">{props.names[3]}</Nav.Link>
+          <Nav.Link href="/register">{props.names[3]}</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

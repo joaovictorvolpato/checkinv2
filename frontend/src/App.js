@@ -1,5 +1,5 @@
 import React from "react";
-import Signup from "./components/Signup";
+import Register from "./components/Register";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Logged from "./components/Logged";
@@ -13,6 +13,7 @@ import {
   useParams
 } from "react-router-dom";
 
+
 function App() {
   
   const { token, removeToken, setToken } = useToken()
@@ -23,7 +24,7 @@ function App() {
         
         <Route path= "/" element={<Home/>}/>
         <Route path= "/login" element={<Login/>}/>
-        <Route path= "/signup" element={<Signup/>}/>
+        <Route path= "/register" element={<Register/>}/>
         <Route path= "/logged" element={<Logged/>}/>
       
       </Routes>

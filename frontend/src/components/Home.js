@@ -5,7 +5,7 @@ const Home = (props) => {
   return (
 
    <div>
-    <Header_home names = {["Checkin", "Home", "Login", "Signup"]}/>
+    <Header_home names = {["Checkin", "Home", "Login", "Register"]}/>
     </div>
   );
 };
