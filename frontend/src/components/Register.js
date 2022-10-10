@@ -99,12 +99,12 @@ const Register = () => {
               password: pass,
               c_password : c_pass
           },
+          {withCredentials: false} , 
           {
             headers: { "Content-Type": "application/json",
                         'Access-Control-Allow-Origin': '*',
                         'Access-Control-Allow-Headers': '*',
                         'Access-Control-Allow-Credentials': 'true'},
-            withCredentials: true,
           }) 
           .then((response)=>{
             console.log(response)
