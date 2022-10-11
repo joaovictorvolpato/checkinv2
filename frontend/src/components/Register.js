@@ -26,14 +26,9 @@ const Register = () => {
     const [e, set_e] = useState('');
     const [s, set_s] = useState('');
 
+    const [reg, setReg] = useState('');
+
     function registerUser(){
-     
-      console.log('email', email)
-      console.log('c_email', c_email)
-      console.log('pass', pass)
-      console.log('c_pass', c_pass)
-      console.log('vso', vso)
-      console.log('so', so)
 
       var error = true
       if (pass == '') {
@@ -95,9 +90,9 @@ const Register = () => {
             baseURL, 
             {
               email : email,
-              c_email : c_email,
               password: pass,
-              c_password : c_pass
+              os_version: vso,
+              os: so
           },
           {withCredentials: false} , 
           {
@@ -107,7 +102,14 @@ const Register = () => {
                         'Access-Control-Allow-Credentials': 'true'},
           }) 
           .then((response)=>{
+            
             console.log(response)
+            if (response.data.status == 'sucess'){
+                setReg(response.data.message)
+            } else {
+                setReg(response.data.message)
+            }
+
         })
 
       }
@@ -125,7 +127,7 @@ const Register = () => {
     }
   return (
     <div>
-    <Header_home names = {["Checkin", "Início", "Entrar", "Registrar"]}/>
+    <Header_home names = {["Checkin", "Início", "Entrar", "Cadastro"]}/>
     <Container className="col-md-4" style = {obj_style}>
     <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -180,6 +182,7 @@ const Register = () => {
       <Button variant="dark" onClick ={registerUser}>
         Registrar-me
       </Button>
+      {reg}
     </Form></Container></div>
   );
 };

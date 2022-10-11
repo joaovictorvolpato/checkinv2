@@ -16,6 +16,14 @@ import {
 
 function App() {
   
+  function entrar(){
+    if (localStorage.getItem('token') != '') {
+      return <Logged/>
+    } else {
+      return <Login/>
+    }
+
+  }
   const { token, removeToken, setToken } = useToken()
   return (
     
@@ -23,9 +31,10 @@ function App() {
       <Routes>
         
         <Route path= "/" element={<Home/>}/>
-        <Route path= "/login" element={<Login/>}/>
-        <Route path= "/register" element={<Register/>}/>
-        <Route path= "/logged" element={<Logged/>}/>
+        <Route path= "/entrar" element={entrar()}/>
+          
+        <Route path= "/cadastro" element={<Register/>}/>
+        <Route path= "/perfil" element={<Logged/>}/>
       
       </Routes>
       

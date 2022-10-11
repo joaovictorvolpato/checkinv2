@@ -37,11 +37,7 @@ const Logged = (props) => {
 
    <div>
     <Header_logged names = {["Checkin", "Checkout"]}/>
-    <Info_card info = {{email: profileData.email,
-                        password: profileData.password, 
-                        os: profileData.os,
-                        os_version: profileData.os_version,
-                        activate: profileData.activate
+    <Info_card info = {{
                         }}/>
     </div>
   );

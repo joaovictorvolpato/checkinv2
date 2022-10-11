@@ -1,94 +1,109 @@
 import React from "react";
-import Header_home from './Header_home';
+import Header_home from "./Header_home";
 import { Form, Button, Container, Row } from "react-bootstrap";
-import { useState } from 'react';
+import { useState } from "react";
 import axios from "axios";
+import useToken from "./useToken";
+const baseURL = "http://localhost:5000/login"
 
 const Login = (props) => {
+  const [loginEmail, setloginEmail] = useState("");
+  const [loginPass, setloginPass] = useState("");
 
-    const [loginForm, setloginForm] = useState({
-      email: "",
-      password: ""
-    })
+  const [checkEmail, setCheckEmail] = useState('');
+  const [checkPass, setCheckPass] = useState('');
 
-    function logMeIn(event) {
-      axios({
-        method: "POST",
-        url:"http://127.0.0.1:5000/login",
-        headers: {'Content-Type': 'application/json', 
-                  'Access-Control-Allow-Origin': '*'},
-        data: JSON.stringify({
-          email: loginForm.email,
-          password: loginForm.password
-        })
-      })
+  const [res, setRes] = useState('');
+
+  function logMeIn() {
+    var error = true
+    if (loginPass == '' ) {
+        setCheckPass('   (Digite a sua senha)')
+        error = false
+    } else {
+      setCheckPass('')
+    }
+
+    if (loginEmail == '' ) {
+      setCheckEmail('   (Digite o seu email)')
+      error = false
+  } else {
+      setCheckEmail('')
+  }
+    if (error) {
+    axios
+      .post(
+        baseURL,
+        {
+          email: loginEmail,
+          password: loginPass,
+        },
+        { withCredentials: false },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Credentials": "true",
+          },
+        }
+      )
       .then((response) => {
-        props.setToken(response.data.access_token)
-      }).catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-          }
+        console.log(response)
+        if (response.data.status == 'fail') {
+            setRes(response.data.message)
+        } else {
+            setRes('')
+          console.log(response.data.access_token)
+          localStorage.setItem('token', response.data.access_token);}
       })
-
-      setloginForm(({
-        email: "",
-        password: ""}))
-
-      event.preventDefault()
-    }
-
-    function handleChange(event) { 
-      const {value, name} = event.target
-      setloginForm(prevNote => ({
-          ...prevNote, [name]: value})
-      )}
-
-    const obj_style = {
-        'margin-top': '10%',
-        'padding': '2%',
-        'background-color': 'white',
-    }
-    const external_div = {
-      'background-image': 'url("earth-g530ed52ac_1920.jpg")'
       
-    }
+      ;}
+  }
+  
+
+  const obj_style = {
+    "marginTop": "10%",
+    padding: "2%",
+    "backgroundColor": "white",
+  };
+  const external_div = {
+    "backgroundImage": 'url("earth-g530ed52ac_1920.jpg")',
+  };
   return (
-    <div style = {external_div}>
-    <Header_home names = {["Checkin", "Home", "Login", "Signup"]}/>
-    <Container className="col-md-4" style = {obj_style}>
-     
+    <div style={external_div}>
+      <Header_home names={["Checkin", "Início", "Entrar", "Cadastro"]} />
+      <Container className="col-md-4" style={obj_style}>
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control onChange = {handleChange}
-                          type="email" 
-                          placeholder="Email"
-                          name = "email"
-                          text = {loginForm.email}
-                          value = {loginForm.email} 
-                          />
+            <Form.Label>Email</Form.Label>{checkEmail}
+            <Form.Control
+              onChange={(e) => {
+                setloginEmail(e.target.value);
+              }}
+              type="email"
+              name="email"
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Password</Form.Label>{checkPass}
 
-          <Form.Control onChange = {handleChange} 
-                          type="password" 
-                          text = {loginForm.password}
-                          name = "password"
-                          placeholder="Password"
-                          value = {loginForm.password}
-                           />
+            <Form.Control
+              onChange={(e) => {
+                setloginPass(e.target.value);
+              }}
+              type="password"
+              name="password"
+            />
           </Form.Group>
-          
-          <Button onClick = {logMeIn} variant="dark" type="submit">
+
+          <Button onClick={logMeIn} variant="dark">
             Login
-          </Button>
+          </Button>{res}
         </Form>
-      
-    </Container></div>
+      </Container>
+    </div>
   );
 };
 
