@@ -37,10 +37,8 @@ const Info_card = (props) => {
         <ListGroup.Item>Password: {props.info['password']}</ListGroup.Item>
         <ListGroup.Item>Os: {props.info['os']}</ListGroup.Item>
         <ListGroup.Item>Os_version: {props.info['os_version']}</ListGroup.Item>
-        <ListGroup.Item>activate: {props.info['activate']}</ListGroup.Item>
         </ListGroup>
         </Card.Text >
-        <Button variant = {riskColor()}>Edit Information</Button>
       
       </Card.Body>
       <Card.Footer className="text-muted">{props.info['lastCheck']}</Card.Footer>

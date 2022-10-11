@@ -1,45 +1,74 @@
 import React from "react";
 import Header_logged from './Header_logged';
 import Info_card from "./Info_card";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios";
 
-const Logged = (props) => {
-  const [profileData, setProfileData] = useState(null)
+const baseURL = "http://localhost:5000/profile"
+
+const Logged = () => {
+  const [profileData, setProfileData] = useState({email: '',
+                                                  password: '',
+                                                  os: '',
+                                                  os_version: ''})
+ 
+  function removeToken(){
+    localStorage.removeItem("token");
+    window.location.reload();
+  }
+  
+  useEffect(()=>{
+    
+    
+    const userToken = localStorage.getItem('token');
+    getData()
+      
+  },[]);
+
   function getData() {
-    axios({
-      method: "GET",
-      url:"http://localhost:5000/profile",
-      headers: {
-        Authorization: 'Bearer ' + props.token
-      }
-    })
-    .then((response) => {
-      const res =response.data
-      res.access_token && props.setToken(res.access_token)
-      setProfileData(({
-        email: res.email,
-        os: res.os,
-        password: res.password,
-        os_version: res.os_version,
-        activate: res.activate}))
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })}
+    axios
+    .get(
+      baseURL, 
+    
+  
+    {  withCredentials: false,
+     headers: { 
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer '+localStorage.getItem('token'),
+                  'Access-Control-Allow-Origin': '*',
+                  'Access-Control-Allow-Headers': '*',
+                  'Access-Control-Allow-Credentials': 'true'
+                }
+    }) 
+    .then((response)=>{
+      
+      setProfileData(response.data)
+
+  }).catch((error)=>{
+    if (error){
+    if (error.response.data.msg == 'Token has expired'){
+        removeToken()
+        setProfileData({email: '',
+        password: '',
+        os: '',
+        os_version: ''})
+    }}
+
+  })}
 
   return (
 
     
 
    <div>
-    <Header_logged names = {["Checkin", "Checkout"]}/>
-    <Info_card info = {{
-                        }}/>
+    <Header_logged names = {["Checkin", "Início", 'Deslogar']}/>
+    <Info_card  info = {{email : profileData.email,
+                         password: profileData.password,
+                         os: profileData.os,
+                         os_version: profileData.os_version
+                        }} />  
     </div>
+    
   );
 };
 

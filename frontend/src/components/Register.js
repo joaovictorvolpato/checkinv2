@@ -3,7 +3,6 @@ import Header_home from './Header_home';
 import {Form, Button, Container, Dropdown} from "react-bootstrap";
 import axios from "axios";
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import userEvent from "@testing-library/user-event";
 
 const baseURL = "http://localhost:5000/register"
 
@@ -83,7 +82,7 @@ const Register = () => {
         set_so_vazio('')
         
       }
-      console.log('error', error)
+      
       if (error) {
         axios
           .post(
@@ -127,7 +126,7 @@ const Register = () => {
     }
   return (
     <div>
-    <Header_home names = {["Checkin", "Início", "Entrar", "Cadastro"]}/>
+    <Header_home names = {["Checkin", "Início", "Entrar", "Cadastro", 'Deslogar']}/>
     <Container className="col-md-4" style = {obj_style}>
     <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">

@@ -12,12 +12,14 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
+import Logout from "./components/Logout";
 
 
 function App() {
   
   function entrar(){
-    if (localStorage.getItem('token') != '') {
+    if (localStorage.getItem('token') != null) {
+      console.log('logged')
       return <Logged/>
     } else {
       return <Login/>
@@ -32,9 +34,9 @@ function App() {
         
         <Route path= "/" element={<Home/>}/>
         <Route path= "/entrar" element={entrar()}/>
-          
         <Route path= "/cadastro" element={<Register/>}/>
-        <Route path= "/perfil" element={<Logged/>}/>
+        <Route path= "/deslogar" element={<Logout/>}/>
+
       
       </Routes>
       

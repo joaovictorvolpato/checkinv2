@@ -54,8 +54,8 @@ const Login = (props) => {
             setRes(response.data.message)
         } else {
             setRes('')
-          console.log(response.data.access_token)
-          localStorage.setItem('token', response.data.access_token);}
+          localStorage.setItem('token', response.data.access_token);
+          window.location.reload();}
       })
       
       ;}
